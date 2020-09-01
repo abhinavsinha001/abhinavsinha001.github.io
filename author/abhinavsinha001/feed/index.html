@@ -10,9 +10,9 @@
 <channel>
 	<title>Abhinav &#8211; Share N Learn</title>
 	<atom:link href="http://localhost/author/abhinavsinha001/feed/" rel="self" type="application/rss+xml" />
-	<link>http://www.sharenlearn.ml/</link>
+	<link>http://abhinavsinha001.github.io/</link>
 	<description>with Abhinav</description>
-	<lastBuildDate>Mon, 31 Aug 2020 16:21:28 +0000</lastBuildDate>
+	<lastBuildDate>Tue, 01 Sep 2020 16:10:09 +0000</lastBuildDate>
 	<language>en-US</language>
 	<sy:updatePeriod>
 	hourly	</sy:updatePeriod>
@@ -21,27 +21,284 @@
 	<generator>https://wordpress.org/?v=5.5</generator>
 
 <image>
-	<url>https://www.sharenlearn.ml/wp-content/uploads/2020/08/cropped-SL-Logo2-1-32x32.png</url>
+	<url>https://abhinavsinha001.github.io/wp-content/uploads/2020/08/cropped-SL-Logo2-1-32x32.png</url>
 	<title>Abhinav &#8211; Share N Learn</title>
-	<link>http://www.sharenlearn.ml/</link>
+	<link>http://abhinavsinha001.github.io/</link>
 	<width>32</width>
 	<height>32</height>
 </image> 
 	<item>
 		<title>Reverse Engineer Any Live Android Application to make it Debuggable</title>
-		<link>https://www.sharenlearn.ml/debugging/2020/08/31/reverse-engineer-any-live-android-application-to-make-it-debuggable/</link>
+		<link>https://abhinavsinha001.github.io/debugging/2020/08/31/reverse-engineer-any-live-android-application-to-make-it-debuggable/</link>
 		
 		<dc:creator><![CDATA[Abhinav]]></dc:creator>
 		<pubDate>Mon, 31 Aug 2020 16:12:09 +0000</pubDate>
 				<category><![CDATA[debugging]]></category>
+		<category><![CDATA[ad-tech]]></category>
 		<category><![CDATA[android]]></category>
 		<category><![CDATA[apk]]></category>
 		<category><![CDATA[charlesproxy]]></category>
 		<category><![CDATA[debug]]></category>
-		<guid isPermaLink="false">https://www.sharenlearn.ml/?p=70</guid>
+		<category><![CDATA[ssl]]></category>
+		<guid isPermaLink="false">https://abhinavsinha001.github.io/?p=70</guid>
 
-					<description><![CDATA[]]></description>
-										<content:encoded><![CDATA[]]></content:encoded>
+					<description><![CDATA[Introduction&#160; There are multiple scenarios where we want to debug actual applications and monitor things like debug logs, network request responses of third party application which uses our SDK or some frameworks. This is helpful if you are trying to look at logs , network traffic etc.This is a very common use case in Ad [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<h2 id="DebugPublisherMobileApplications-Introduction">Introduction&nbsp;</h2>
+
+
+
+<p class="has-text-align-left">There are multiple scenarios where we want to debug actual applications and monitor things like debug logs, network request responses of third party application which uses our SDK or some frameworks.  This is helpful if you are trying to look at logs , network traffic etc.This is a very common use case in Ad Tech industry where Apps integrate IMA SDK, Freewheel SDK for ads. The process of getting a debug SDK is pretty time-consuming and unnecessary overhead. </p>
+
+
+
+<p class="has-text-align-left">As a developer /architect looking at teams scramble for this led me to solve for this.</p>
+
+
+
+<h2 id="DebugPublisherMobileApplications-AndroidApplications">Android Applications</h2>
+
+
+
+<h3 id="DebugPublisherMobileApplications-CurrentIssues">Current Issues</h3>
+
+
+
+<ol><li>Live android applications are not built for debugging.</li><li>Intercepting SSL traffic is not by default possible using tools like&nbsp;<a href="https://www.charlesproxy.com/">Charles Proxy</a>&nbsp;or&nbsp;<a href="https://www.telerik.com/fiddler">Fiddler</a></li><li>Asking debug builds from publisher has high turnaround time.</li></ol>
+
+
+
+<h3 id="DebugPublisherMobileApplications-Solution">Solution&nbsp;</h3>
+
+
+
+<p>We can easily download decode and build APK and enable debug mode as well as enable SSL network interception.</p>
+
+
+
+<h4 id="DebugPublisherMobileApplications-Prerequisites:">Prerequisites:</h4>
+
+
+
+<ul><li>Java 1.8 (Note java 11 and higher versions are known to have issues with the tools)</li><li><a href="https://developer.android.com/studio">Android Studio</a></li><li><a href="https://developer.android.com/studio/command-line/adb">ADB CLI Tool</a>&nbsp;&#8211; can be installed as part of Android Studio</li><li><a href="https://ibotpeaches.github.io/Apktool/install/">APKTool</a></li><li><a href="https://developer.android.com/studio/run/device">Setup Actual Android Device&nbsp;</a>OR use&nbsp;<a href="https://developer.android.com/studio/run/emulator">Emulator Device</a></li></ul>
+
+
+
+<h4 id="DebugPublisherMobileApplications-StepstoDecodeandcreateaDebugVersionofAPK">Steps to Decode and create a Debug Version of APK</h4>
+
+
+
+<h5 id="DebugPublisherMobileApplications-Step1:DownloadtheAPKfromtrusteddownloadsites-somepopularsitesare:">Step1: Download the APK from trusted download sites &#8211; some popular sites are:</h5>
+
+
+
+<ul><li><a href="https://www.apkmirror.com/">APKMirror</a></li><li><a href="https://apkpure.com/">APKPure</a></li></ul>
+
+
+
+<p>Here we will use&nbsp;<a href="https://www.apkmirror.com/apk/sony-pictures-networks-india-pvt-ltd/sonyliv-live-tv-sports-movies/sonyliv-live-tv-sports-movies-6-4-4-release/sonyliv-originals-hollywood-live-sport-tv-show-6-4-4-5-android-apk-download/download/?forcebaseapk">Sony Liv Apk 6.4.4</a>&nbsp;as an example&nbsp;</p>
+
+
+
+<h5 id="DebugPublisherMobileApplications-Step2:DecodetheapkusingApktools">Step 2: Decode the apk using Apk tools</h5>
+
+
+
+<div class="wp-block-group"><div class="wp-block-group__inner-container">
+<div class="wp-block-group"><div class="wp-block-group__inner-container"></div></div>
+
+
+<pre class="brush: bash; title: ; notranslate">
+#Set a short App Name
+export APP_NAME=com.sonyliv_6.4.4
+#Rename the apk to a short name (easy to manage)
+mv com.sonyliv_6.4.4-9237_minAPI19\(armeabi-v7a\)\(nodpi\)_apkmirror.com.apk $APP_NAME.apk
+#decode using apk tool
+apktool d $APP_NAME.apk
+# go into the extracted folder
+cd $APP_NAME
+</pre></div></div>
+
+
+
+<h5 id="DebugPublisherMobileApplications-Step3:ModifyAndroidApplicationmanifestandadddebugflagandnetworkconfig">Step 3: Modify Android Application manifest and add debug flag and network config</h5>
+
+
+<pre class="brush: bash; title: ; notranslate">
+vi AndroidManifest.xml
+</pre>
+
+
+<p>Find &lt;application&gt; tag and append following flags:</p>
+
+
+<pre class="brush: plain; title: ; notranslate">
+android:debuggable=&quot;true&quot; android:networkSecurityConfig=&quot;@xml/network_security_config&quot;
+</pre>
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="299" src="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-3.29.56-AM-1024x299.png" alt="" class="wp-image-113" srcset="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-3.29.56-AM-1024x299.png 1024w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-3.29.56-AM-300x88.png 300w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-3.29.56-AM-768x225.png 768w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-3.29.56-AM-1536x449.png 1536w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-3.29.56-AM-2048x599.png 2048w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-3.29.56-AM-1200x351.png 1200w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-3.29.56-AM-1980x579.png 1980w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h5 id="DebugPublisherMobileApplications-Step4:Add/ModifyNetworksecurityconfigtoenabletrustingusercertificate">Step4: Add / Modify Network security config to enable trusting user certificate</h5>
+
+
+<pre class="brush: bash; title: ; notranslate">
+vi res/xml/network_security_config.xml
+</pre>
+
+
+<p>Make sure following section is present in the xml file:</p>
+
+
+<pre class="brush: xml; title: ; notranslate">
+&lt;debug-overrides&gt;
+  &lt;trust-anchors&gt;
+   &lt;certificates src=&quot;user&quot;/&gt;
+  &lt;/trust-anchors&gt;
+&lt;/debug-overrides&gt;
+</pre>
+
+
+<figure class="wp-block-image size-large is-resized is-style-default"><img loading="lazy" src="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-3.40.55-AM-1024x360.png" alt="" class="wp-image-114" width="613" height="215" srcset="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-3.40.55-AM-1024x360.png 1024w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-3.40.55-AM-300x106.png 300w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-3.40.55-AM-768x270.png 768w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-3.40.55-AM.png 1188w" sizes="(max-width: 613px) 100vw, 613px" /></figure>
+
+
+
+<h5 id="DebugPublisherMobileApplications-Step5:CreateupdatedAPKandsignitusingapktool">Step5: Create updated APK and sign it using apktool</h5>
+
+
+<pre class="brush: bash; title: ; notranslate">
+#Build APK
+apktool b -d .
+#Check if the apk is available in dist folderls dist/ #Download signing certificate and jar 
+wget https://github.com/appium/sign/releases/download/1.0/signapk-1.0.jarwget https://github.com/appium/sign/archive/1.0.tar.gztar -xvzf 1.0.tar.gz 
+#Sign using test certificates
+java -jar signapk-1.0.jar sign-1.0/testkey.x509.pem sign-1.0/testkey.pk8 dist/$APP_NAME.apk dist/$APP_NAME-signed.apk 
+#Check in dist folder - you should have apk named $APP_NAME-signed.apk
+ls /dist
+</pre>
+
+
+<h5 id="DebugPublisherMobileApplications-Step5:InstalltheapplicationtoemulatororconnectedHardwareDevice">Step 6: Install the application to emulator or connected Hardware Device</h5>
+
+
+
+<div class="wp-block-group"><div class="wp-block-group__inner-container"><pre class="brush: bash; title: ; notranslate">
+#Check for connected devices - if you have configured correctly the device/emulator should show up.
+adb devices 
+#Uninstall existing App from device/emulator(You can do it directly from device / emulator as well)
+#adb uninstall &lt;package-name&gt; 
+# Here you can use com.sonyliv as package
+adb uninstall com.sonyliv 
+#Now install the debug apk
+adb install dist/$APP_NAME-signed.apk
+</pre></div></div>
+
+
+
+<h4 id="DebugPublisherMobileApplications-StepstoCheckDebugLogsandSSLNetworkTraffic">Steps to Check Debug Logs and SSL Network Traffic</h4>
+
+
+
+<h5 id="DebugPublisherMobileApplications-Step1AttachAPKasdebugprocesswithAndroidStudio">Step 1: Attach APK as debug process with Android Studio</h5>
+
+
+
+<p>Now you should can attach the debugger to debug apk and see debug logs in logicat window of Android studio:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="399" src="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.12.06-PM-1024x399.png" alt="" class="wp-image-115" srcset="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.12.06-PM-1024x399.png 1024w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.12.06-PM-300x117.png 300w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.12.06-PM-768x299.png 768w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.12.06-PM-1536x598.png 1536w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.12.06-PM-1200x467.png 1200w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.12.06-PM.png 1778w" sizes="(max-width: 1024px) 100vw, 1024px" /><figcaption>App is debuggable now.</figcaption></figure>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="420" src="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.13.11-PM-1024x420.png" alt="" class="wp-image-116" srcset="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.13.11-PM-1024x420.png 1024w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.13.11-PM-300x123.png 300w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.13.11-PM-768x315.png 768w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.13.11-PM-1536x630.png 1536w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.13.11-PM-1200x492.png 1200w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.13.11-PM.png 1778w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h5 id="DebugPublisherMobileApplications-Step2:StartCharlesProxyorFiddler">Step2: Start Charles Proxy or Fiddler</h5>
+
+
+
+<p>For Charles Proxy &#8211; Start server on Laptop &nbsp;</p>
+
+
+
+<blockquote class="wp-block-quote"><p>NOTE:  If you have Antivirus enabled the firewall blocks proxy &#8211; so firewall needs to be disabled &#8211; either enable following ports 8888(Charles Proxy) and 8866(Fiddler)</p></blockquote>
+
+
+
+<p>Enable SSL Proxy&nbsp;</p>
+
+
+
+<p>Get the Proxy IP and port from Charles Help Menu:</p>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="288" src="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-5.20.52-PM-1024x288.png" alt="" class="wp-image-117" srcset="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-5.20.52-PM-1024x288.png 1024w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-5.20.52-PM-300x84.png 300w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-5.20.52-PM-768x216.png 768w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-5.20.52-PM-1536x432.png 1536w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-5.20.52-PM-2048x576.png 2048w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-5.20.52-PM-1200x338.png 1200w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-5.20.52-PM-1980x557.png 1980w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<figure class="wp-block-image size-large"><img loading="lazy" width="1024" height="230" src="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-5.21.06-PM-1024x230.png" alt="" class="wp-image-118" srcset="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-5.21.06-PM-1024x230.png 1024w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-5.21.06-PM-300x67.png 300w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-5.21.06-PM-768x172.png 768w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-5.21.06-PM-1536x345.png 1536w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-5.21.06-PM-1200x269.png 1200w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-5.21.06-PM.png 1568w" sizes="(max-width: 1024px) 100vw, 1024px" /></figure>
+
+
+
+<h5>Step3: In your device /emulator set the proxy server IP and port</h5>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img loading="lazy" src="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot_20200811-050805-2-576x1024.png" alt="" class="wp-image-119" width="295" height="524" srcset="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot_20200811-050805-2-576x1024.png 576w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot_20200811-050805-2-169x300.png 169w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot_20200811-050805-2-768x1365.png 768w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot_20200811-050805-2-864x1536.png 864w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot_20200811-050805-2.png 1080w" sizes="(max-width: 295px) 100vw, 295px" /></figure>
+
+
+
+<h5>Step4: On your device download and install ssl certificates.</h5>
+
+
+
+<p> You can do this by hitting following URL : <a href="http://chls.pro/ssl">http://chls.pro/ssl</a> for Charles Proxy and <a href="http://ipv4.fiddler:8866/">http://ipv4.fiddler:8866</a> for fiddler</p>
+
+
+
+<p>You can install downloaded certificates from:</p>
+
+
+
+<p><strong>Security->Advanced→Encryptions &amp; Credentials → Install a certificate.</strong></p>
+
+
+
+<p>After installing you should see the certificate under user.</p>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img loading="lazy" src="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.21.49-PM-2.png" alt="" class="wp-image-134" width="248" height="502" srcset="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.21.49-PM-2.png 310w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-11-at-9.21.49-PM-2-148x300.png 148w" sizes="(max-width: 248px) 100vw, 248px" /></figure>
+
+
+
+<h5>Step5: On Charles Proxy &#8211; you should see decoded logs for SSL traffic. As a sample I have highlighted some GAM calls.</h5>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img loading="lazy" src="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.51-PM-1024x659.jpeg" alt="" class="wp-image-126" width="514" height="330" srcset="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.51-PM-1024x659.jpeg 1024w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.51-PM-300x193.jpeg 300w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.51-PM-768x494.jpeg 768w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.51-PM-1536x988.jpeg 1536w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.51-PM-2048x1318.jpeg 2048w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.51-PM-1200x772.jpeg 1200w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.51-PM-1980x1274.jpeg 1980w" sizes="(max-width: 514px) 100vw, 514px" /></figure>
+
+
+
+<figure class="wp-block-image size-large is-resized"><img loading="lazy" src="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.29-PM-2-1024x651.png" alt="" class="wp-image-127" width="506" height="321" srcset="https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.29-PM-2-1024x651.png 1024w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.29-PM-2-300x191.png 300w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.29-PM-2-768x488.png 768w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.29-PM-2-1536x977.png 1536w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.29-PM-2-2048x1302.png 2048w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.29-PM-2-1200x763.png 1200w, https://abhinavsinha001.github.io/wp-content/uploads/2020/09/Screenshot-2020-08-10-at-11.51.29-PM-2-1980x1259.png 1980w" sizes="(max-width: 506px) 100vw, 506px" /></figure>
+
+
+
+<h3>Credits and References:</h3>
+
+
+
+<p><a href="https://www.evilsocket.net/2017/04/27/Android-Applications-Reversing-101/#Debugging">https://www.evilsocket.net/2017/04/27/Android-Applications-Reversing-101/#Debugging</a></p>
+
+
+
+<p><a href="https://www.charlesproxy.com/documentation/using-charles/ssl-certificates/">https://www.charlesproxy.com/documentation/using-charles/ssl-certificates/</a></p>
+]]></content:encoded>
 					
 		
 		
